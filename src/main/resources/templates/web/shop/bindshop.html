@@ -5,6 +5,111 @@
     <title>绑定店铺</title>
 </head>
 <body>
-绑定店铺
+<ul id="myTab" class="nav nav-tabs">
+    <li class="active">
+        <a href="#con_bind_shop" data-toggle="tab">
+            已绑定店铺
+        </a>
+    </li>
+    <li><a href="#con_new_shop" data-toggle="tab">绑定新店铺</a></li>
+</ul>
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade in active" id="con_bind_shop">
+        <p>
+        <table id="tbl_bind_shop" class="table table-bordered">
+            <thead>
+            <tr bgcolor="#b0c4de">
+                <td>序号</td>
+                <td>平台店铺</td>
+                <td>店铺名称</td>
+                <td>旺旺ID</td>
+                <td>做任务间隔</td>
+                <td>发货地</td>
+                <td>店铺网址</td>
+                <td>审核状态</td>
+            </tr>
+            </thead>
+            <tr>
+                <td>aa</td>
+            </tr>
+        </table>
+        </p>
+    </div>
+    <div class="tab-pane fade" id="con_new_shop">
+        <div class="bjui-row col-2">
+            <label class="row-label">平台选择：</label>
+            <div class="row-input">
+                <select data-toggle="selectpicker">
+                    <option value="1" selected="">淘宝</option>
+                    <option value="2">天猫</option>
+                </select>
+            </div>
+            <label class="row-label">验证码：</label>
+            <div class="row-input">
+                <input type="text" value="普通文本框">
+            </div>
+        </div>
+
+        <div class="container">
+            <p>淘宝网商家验证码填写位置示意：</p>
+            <img src="images/login/captcha.jpg" th:src="@{/images/login/captcha.jpg}" class="img-responsive"
+                 alt="Cinque Terre" width="304" height="236">
+        </div>
+
+        <div class="bjui-row col-2">
+            <label class="row-label">商品链接：</label>
+            <div class="row-input">
+                <input type="text" value="">
+            </div>
+        </div>
+
+        <div class="bjui-row col-2">
+            <label class="row-label">店铺名称：</label>
+            <div class="row-input">
+                <input type="text" value="">
+            </div>
+
+            <label class="row-label">旺旺名称：</label>
+            <div class="row-input">
+                <input type="text" value="">
+            </div>
+        </div>
+
+        <div class="bjui-row col-2">
+            <label class="row-label">发货地址：</label>
+            <div class="row-input">
+                <select name="province1" data-toggle="selectpicker" data-nextselect="#j_form_city1"
+                        data-refurl="../../json/select/city_{value}.html">
+                    <option value="all">--省市--</option>
+                    <option value="bj" selected="">北京</option>
+                    <option value="sh">上海</option>
+                </select>
+                <select name="city1" id="j_form_city1" data-toggle="selectpicker" data-nextselect="#j_form_area1"
+                        data-refurl="../../json/select/area_{value}.html" data-val="bj" data-emptytxt="--城市--">
+                    <option value="all">--城市--</option>
+                </select>
+                <select name="area1" id="j_form_area1" data-toggle="selectpicker" data-val="朝阳" data-emptytxt="--区县--">
+                    <option value="all">--区县--</option>
+                </select>
+            </div>
+
+            <label class="row-label">验证码：</label>
+            <div class="row-input">
+                <input type="text" class="form-control" id="j_captcha" name="captcha" placeholder="验证码"
+                       aria-describedby="sizing-addon-password">
+                <img id="captcha_img"
+                     src="images/login/captcha.jpg"
+                     alt="点击更换"
+                     title="点击更换" class="m">
+            </div>
+        </div>
+
+        <div class="bjui-row" align="center">
+            <button type="button" class="btn-blue btn-lg" style="width:200px;">提交</button>
+        </div>
+
+
+    </div>
+</div>
 </body>
 </html>
