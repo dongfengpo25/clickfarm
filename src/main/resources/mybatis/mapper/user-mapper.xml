@@ -75,7 +75,7 @@
         where id=#{id}
     </update>
 
-    <update id="editUser" parameterType="string">
+    <update id="disableUser" parameterType="string">
         update  s_user set  status_id=4 where phone=#{phone}
     </update>
 

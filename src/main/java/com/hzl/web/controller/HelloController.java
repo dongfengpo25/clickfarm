@@ -14,8 +14,8 @@ public class HelloController {
 
     @Autowired
     Person person;
-    @Autowired
-    CashierImpl cashier;
+    //@Autowired
+    //CashierImpl cashierImpl;
 
     @RequestMapping("/hello")
     public Object hello() {
@@ -30,6 +30,6 @@ public class HelloController {
 
     @RequestMapping("/buybook")
     public void buyBook() {
-        cashier.checkout("hzl", Arrays.asList("1001", "1002"));
+        //cashierImpl.checkout("hzl", Arrays.asList("1001", "1002"));
     }
 }

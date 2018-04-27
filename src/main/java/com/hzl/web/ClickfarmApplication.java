@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@ImportResource("classpath:tx/transaction.xml")
+@ImportResource({"classpath:tx/transaction.xml","classpath:shiro/shiro.xml"})
 //@ComponentScan("com.hzl.web")
 @EnableTransactionManagement
 @SpringBootApplication
