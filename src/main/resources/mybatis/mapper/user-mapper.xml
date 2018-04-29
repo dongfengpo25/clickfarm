@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="user">
-    <select id="query" parameterType="string" resultType="User">
+<mapper namespace="userInfo">
+
+    <resultMap id="userInfoResult" type="UserInfo">
+        <collection property="roles" javaType="ArrayList" column="id" ofType="Role" select="selectRoleForUser"/>
+    </resultMap>
+
+    <resultMap id="roleResult" type="Role">
+        <collection property="permissions" javaType="ArrayList" column="id" ofType="Permission" select="selectPermissionForRole"/>
+    </resultMap>
+
+    <select id="selectPermissionForRole" resultType="Permission">
+        SELECT a.* FROM s_permission a LEFT JOIN s_role_permission b ON a.id =b.pid WHERE b.rid = #{id} and a.enable = 1
+    </select>
+
+    <select id="selectRoleForUser" resultMap="roleResult">
+        SELECT a.* FROM s_role a LEFT JOIN s_user_role b ON a.id =b.`rid` WHERE b.`uid` = #{id} and a.enable = 1
+    </select>
+
+    <select id="query"  resultMap="userInfoResult">
         select * from s_user
     </select>
 
-    <select id="getUserByPhone" parameterType="string" resultType="User">
+    <select id="getUserInfoByPhone" parameterType="string" resultMap="userInfoResult">
         select * from s_user where phone = #{phone}
     </select>
 
-    <select id="getUserByNumber" parameterType="string" resultType="User">
+    <select id="getUserInfoByNumber" parameterType="string" resultMap="userInfoResult">
         select * from s_user where number = #{number}
     </select>
 
-    <insert id="addUser" parameterType="User">
+    <insert id="addUser" parameterType="UserInfo">
         INSERT INTO s_user
             (id,
              number,
@@ -54,7 +71,7 @@
         #{password})
     </insert>
 
-    <update id="editUser" parameterType="User">
+    <update id="editUser" parameterType="UserInfo">
         update  s_user set
         number=#{number},
         phone=#{phone},

@@ -8,7 +8,9 @@
         <!-- 定义别名，在mapper里写参数类型就可以使用别名 -->
         <typeAlias type="com.hzl.web.bean.Account" alias="Account"/>
         <typeAlias type="com.hzl.web.bean.Book" alias="Book"/>
-        <typeAlias type="com.hzl.web.bean.User" alias="User"/>
+        <typeAlias type="com.hzl.web.shiro.bean.UserInfo" alias="UserInfo"/>
+        <typeAlias type="com.hzl.web.shiro.bean.Role" alias="Role"/>
+        <typeAlias type="com.hzl.web.shiro.bean.Permission" alias="Permission"/>
     </typeAliases>
     <!-- 映射map -->
     <mappers>

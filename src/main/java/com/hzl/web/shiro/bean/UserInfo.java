@@ -1,9 +1,11 @@
-package com.hzl.web.bean;
+package com.hzl.web.shiro.bean;
+
+import java.util.List;
 
 /**
  * 用户
  */
-public class User {
+public class UserInfo {
     //ID主键
     private int id;
     //用户号码
@@ -31,7 +33,9 @@ public class User {
     //QQ
     private String qq;
     //注册时间
-    private String writetime;
+    private String writeTime;
+    //最后一次登录时间
+    private String lastLoginTime;
     //密码
     private String password;
     //身份证正面文件名
@@ -40,6 +44,8 @@ public class User {
     private String photo2;
     //身份证手持正面文件名
     private String photo3;
+    //角色列表
+    private List<Role> roles;
 
     public int getId() {
         return id;
@@ -145,12 +151,12 @@ public class User {
         this.qq = qq;
     }
 
-    public String getWritetime() {
-        return writetime;
+    public String getWriteTime() {
+        return writeTime;
     }
 
-    public void setWritetime(String writetime) {
-        this.writetime = writetime;
+    public void setWriteTime(String writeTime) {
+        this.writeTime = writeTime;
     }
 
     public String getPassword() {
@@ -183,5 +189,21 @@ public class User {
 
     public void setPhoto3(String photo3) {
         this.photo3 = photo3;
+    }
+
+    public String getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(String lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

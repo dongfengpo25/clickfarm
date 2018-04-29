@@ -13,8 +13,9 @@ public class FilterChainDefinitionMapBuilder {
         map.put("/login", "anon");
         map.put("/userLogin", "anon");
         map.put("/logout", "logout");
-        map.put("/main.html", "authc,roles[user]");
         map.put("/main.html", "user");
+        //测试记住我可以访问绑定店铺
+        map.put("/bindShop", "user");
 
         map.put("/**", "authc");
 
