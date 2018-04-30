@@ -22,7 +22,6 @@
         </property>
 
         <property name="rememberMeManager" ref="rememberMeManager"></property>
-
     </bean>
 
     <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">

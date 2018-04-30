@@ -59,11 +59,11 @@ public class ShiroRealm extends AuthorizingRealm {
         Object principal = userInfo;
         //2). credentials: 密码.
         Object credentials = null; //"fc1709d0a95a6be30bc5926fdb7f22f4";
-        if ("admin".equals(username)) {
-            credentials = "038bdaf98f2037b31f1e75b5b4c9b26e";
-        } else if ("user".equals(username)) {
-            credentials = "098d2c478e9c11555ce2823231e02ec1";
-        }
+//        if ("admin".equals(username)) {
+//            credentials = "038bdaf98f2037b31f1e75b5b4c9b26e";
+//        } else if ("user".equals(username)) {
+//            credentials = "098d2c478e9c11555ce2823231e02ec1";
+//        }
         credentials = userInfo.getPassword();
 
         //3). realmName: 当前 realm 对象的 name. 调用父类的 getName() 方法即可

@@ -233,13 +233,13 @@
                                                           data-options="{id:'nav_browseTask', title:'浏览任务管理'}"><i
                                 class="fa fa-caret-right"></i>&nbsp;浏览任务管理</a></li>
 
-                        <shiro:hasPermission th:value="admin" >
-                            aaa
-                        </shiro:hasPermission>
-                        <li class="navtab-base-button"><a shiro:hasRole="admin" th:href="@{/bindShop}"
-                                                          data-toggle="navtab"
-                                                          data-options="{id:'nav_shop', title:'绑定店铺'}"><i
-                                class="fa fa-caret-right"></i>&nbsp;绑定店铺</a></li>
+                        <li class="navtab-base-button">
+                            <a th:href="@{/bindShop}"
+                               data-toggle="navtab"
+                               data-options="{id:'nav_shop', title:'绑定店铺'}"><i
+                                    class="fa fa-caret-right"></i>&nbsp;绑定店铺</a>
+                        </li>
+
                     </ul>
                 </div>
             </div>

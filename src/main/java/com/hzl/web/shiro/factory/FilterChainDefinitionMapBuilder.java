@@ -16,9 +16,9 @@ public class FilterChainDefinitionMapBuilder {
         map.put("/main.html", "user");
         //测试记住我可以访问绑定店铺
         map.put("/bindShop", "user");
+        map.put("/druid/**", "authc, roles[\"admin\"]");
 
         map.put("/**", "authc");
-
         return map;
     }
 
