@@ -26,7 +26,8 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
-public class LoginController {
+public class LoginController extends BaseController {
+    private final String login_html = "/login.html";
 
     @RequestMapping(value = "/userLogin", method = RequestMethod.POST)
     public String login(Model model, HttpServletRequest request, HttpServletResponse response,
@@ -37,19 +38,16 @@ public class LoginController {
                         Map<String, Object> map) throws Exception {
 
         Session session = SecurityUtils.getSubject().getSession();
-        String captcha_server = (String) session.getAttribute("_code");
+        String captcha_server = (String) session.getAttribute(_code);
         if (StringUtil.isEmpty(captcha_server)) {
-            map.put("status", 500);
             map.put("msg", "验证码错误！");
-            return "/login.html";
+            return login_html;
         }
         //还可以读取一次后把验证码清空，这样每次登录都必须获取验证码
-        session.removeAttribute("_code");
+        session.removeAttribute(_code);
         if (!captcha_server.equalsIgnoreCase(captcha)) {
-            map.put("status", 500);
             map.put("msg", "验证码错误！");
-            //request.getRequestDispatcher("/login.html").forward(request,response);
-            return "/login.html";
+            return login_html;
         }
 
         Subject currentUser = SecurityUtils.getSubject();
@@ -60,25 +58,19 @@ public class LoginController {
             // rememberme
             token.setRememberMe(remember);
             try {
-                System.out.println("1. " + token.hashCode());
                 // 执行登录.
                 currentUser.login(token);
             } catch (IncorrectCredentialsException e) {
-                System.out.println("用户名或密码错误");
                 map.put("msg", "用户名或密码错误");
-                model.addAttribute("msg", "用户名或密码错误");
             }
             // ... catch more exceptions here (maybe custom ones specific to your application?
             // 所有认证时异常的父类.
             catch (AuthenticationException e) {
-                //unexpected condition?  error?
-                System.out.println("登录失败: " + e.getMessage());
                 map.put("msg", e.getMessage());
-                model.addAttribute("msg", e.getMessage());
             }
         }
         if (map.size() > 0) {
-            return "login.html";
+            return login_html;
         }
 
         return "redirect:/main.html";
@@ -105,59 +97,5 @@ public class LoginController {
         Subject currentUser = SecurityUtils.getSubject();
         currentUser.logout();
         return "redirect:/login.html";
-    }
-
-    /**
-     * 获取验证码（Gif版本）
-     *
-     * @param response
-     */
-    @RequestMapping(value = "getGifCode", method = RequestMethod.GET)
-    public void getGifCode(HttpServletResponse response, HttpServletRequest request) {
-        try {
-            response.setHeader("Pragma", "No-cache");
-            response.setHeader("Cache-Control", "no-cache");
-            response.setDateHeader("Expires", 0);
-            response.setContentType("image/gif");
-            /**
-             * gif格式动画验证码
-             * 宽，高，位数。
-             */
-            Captcha captcha = new GifCaptcha(146, 33, 4);
-            //输出
-            captcha.out(response.getOutputStream());
-            HttpSession session = request.getSession(true);
-            //存入Session
-            session.setAttribute("_code", captcha.text().toLowerCase());
-        } catch (Exception e) {
-            System.err.println("获取验证码异常：" + e.getMessage());
-        }
-    }
-
-    /**
-     * 获取验证码（jpg版本）
-     *
-     * @param response
-     */
-    @RequestMapping(value = "getJPGCode", method = RequestMethod.GET)
-    public void getJPGCode(HttpServletResponse response, HttpServletRequest request) {
-        try {
-            response.setHeader("Pragma", "No-cache");
-            response.setHeader("Cache-Control", "no-cache");
-            response.setDateHeader("Expires", 0);
-            response.setContentType("image/jpg");
-            /**
-             * jgp格式验证码
-             * 宽，高，位数。
-             */
-            Captcha captcha = new SpecCaptcha(146, 33, 4);
-            //输出
-            captcha.out(response.getOutputStream());
-            HttpSession session = request.getSession(true);
-            //存入Session
-            session.setAttribute("_code", captcha.text().toLowerCase());
-        } catch (Exception e) {
-            System.err.println("获取验证码异常：" + e.getMessage());
-        }
     }
 }
