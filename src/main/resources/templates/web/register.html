@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, userInfo-scalable=no">
-    <title>商家后台</title>
+    <title>商家注册</title>
     <meta name="renderer" content="webkit">
     <script src="js/B-JUI/js/jquery-1.11.3.min.js"></script>
     <script src="js/B-JUI/js/jquery.cookie.js"></script>
@@ -52,10 +52,6 @@
             cursor: pointer;
         }
 
-        .main_box .logo img {
-            height: 65px;
-        }
-
         @media (min-width: 768px) {
             .main_box {
                 margin-left: -240px;
@@ -63,27 +59,18 @@
                 width: 480px;
             }
 
-            .main_box .logo img {
-                height: 65px;
-            }
         }
     </style>
     <script th:inline="javascript" type="text/javascript">
-        var COOKIE_NAME = 'sys_em_username';
         $(function () {
+
             choose_bg();
             //changeCode();
-            if ($.cookie(COOKIE_NAME)) {
-                $("#j_username").val($.cookie(COOKIE_NAME));
-                $("#j_password").focus();
-                $("#j_remember").attr('checked', true);
-            } else {
-                $("#j_username").focus();
-            }
+
             $("#captcha_img").click(function () {
                 changeCode();
             });
-            $("#login_form").submit(function () {
+            $("#register_form").submit(function () {
                 var issubmit = true;
                 var i_index = 0;
                 $(this).find('.form-control').each(function (i) {
@@ -94,32 +81,33 @@
                             i_index = i;
                     }
                 });
+
+                if (!isPoneAvailable($.trim($("#j_phone").val()))){
+                    $("#j_phone").val("");
+                    $("#j_phone").css('border', '1px #ff0000 solid');
+                    $("#j_phone").focus();
+
+                    return false;
+                }
+
                 if (!issubmit) {
                     $(this).find('.form-control').eq(i_index).focus();
                     return false;
                 }
-                var $remember = $("#j_remember");
-                if ($remember.attr('checked')) {
-                    $.cookie(COOKIE_NAME, $("#j_username").val(), {path: '/', expires: 15});
-                } else {
-                    $.cookie(COOKIE_NAME, null, {path: '/'});  //删除cookie
-                }
 
-                $("#login_ok").attr("disabled", true).val('登陆中..');
-                /*
-                var key = CryptoJS.enc.Base64.parse($("#j_randomKey").val());
-                var iv = CryptoJS.enc.Latin1.parse('0102030405060708');
-                var password = CryptoJS.AES.encrypt($("#j_password").val(), key, {iv:iv, mode:CryptoJS.mode.CBC, padding:CryptoJS.pad.Pkcs7 });
-
-                $("#j_password").val(password)
-                */
-
-                //return true;
-
-                location.href = 'login.html'
+                $("#login_ok").attr("disabled", true).val('正在注册中..');
 
             });
         });
+
+        function isPoneAvailable(str) {
+            var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+            if (!myreg.test(str)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
 
         function changeCode() {
             $("#captcha_img").attr("src", "getGifCode?t=" + (new Date().getTime()));
@@ -168,25 +156,33 @@
 <![endif]-->
 <div class="container">
     <div class="main_box">
-        <form action="main.html" th:action="@{/userLogin}" id="login_form" method="post">
-            <input type="hidden" value="" id="j_randomKey"/>
-            <input type="hidden" name="jfinal_token" value=""/>
+        <form th:action="@{/register/commit}" id="register_form" method="post">
             <p class="text-center logo"><img src="images/login/logo.jpg" height="65"></p>
+
             <div style="color: red" class="login_msg text-center" th:text="${msg}"
                  th:if="${not #strings.isEmpty(msg)}"></div>
             <div class="form-group">
                 <div class="input-group">
-                    <span class="input-group-addon" id="sizing-addon-userInfo"><span
+                    <span class="input-group-addon" id="sizing-addon-name"><span
                             class="glyphicon glyphicon-user"></span></span>
-                    <input type="text" class="form-control" id="j_username" name="username" value="" placeholder="登录账号"
-                           aria-describedby="sizing-addon-userInfo">
+                    <input type="text" class="form-control" id="j_name" name="name" value="" placeholder="真实姓名"
+                           aria-describedby="sizing-addon-name">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon" id="sizing-addon-phone"><span
+                            class="glyphicon glyphicon-phone-alt"></span></span>
+                    <input type="text" class="form-control" data-rule="mobile" id="j_phone" name="phone"
+                           value="" placeholder="手机号码"
+                           aria-describedby="sizing-addon-phone">
                 </div>
             </div>
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon-password"><span
                             class="glyphicon glyphicon-lock"></span></span>
-                    <input type="password" class="form-control" id="j_password" name="password" placeholder="登录密码"
+                    <input type="password" class="form-control" id="j_password" name="password" placeholder="密码"
                            aria-describedby="sizing-addon-password">
                 </div>
             </div>
@@ -200,22 +196,9 @@
                     <img alt="点击更换" title="点击更换" th:src="@{/getGifCode}" id="captcha_img" class="m"></span>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label for="j_remember" class="m"><input id="j_remember" type="checkbox" value="true"
-                                                             name="remember">&nbsp;记住登陆账号!</label>
-                </div>
-            </div>
+
             <div class="text-center">
-                <button type="submit" id="login_ok" class="btn btn-primary btn-lg">&nbsp;登&nbsp;录&nbsp;</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="reset" class="btn btn-default btn-lg">&nbsp;重&nbsp;置&nbsp;</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                <a th:href="@{/register}">
-                    <button type="button" class="btn btn-default btn-lg" id="register_btn">&nbsp;注&nbsp;册&nbsp;</button>
-                </a>
-            </div>
-            <div class="text-center">
-                <hr>
-                2018 - 2022
+                <button type="submit" id="login_ok" class="btn btn-primary btn-lg">&nbsp;注&nbsp;册&nbsp;</button>
             </div>
         </form>
     </div>

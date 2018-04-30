@@ -23,11 +23,11 @@
         select * from s_user
     </select>
 
-    <select id="getUserInfoByPhone" parameterType="string" resultMap="userInfoResult">
+    <select id="getUserInfoByPhone" parameterType="string" resultType="UserInfo">
         select * from s_user where phone = #{phone}
     </select>
 
-    <select id="getUserInfoByNumber" parameterType="string" resultMap="userInfoResult">
+    <select id="getUserInfoByNumber" parameterType="string" resultType="UserInfo">
         select * from s_user where number = #{number}
     </select>
 
@@ -37,16 +37,15 @@
              number,
              name,
              phone,
-             role_id,
-             area_id,
+             areaId,
              sms,
-             status_id,
-             id_card,
-             bank_card,
-             alipay_id,
-             taobao_id,
+             statusId,
+             idCard,
+             bankCard,
+             alipayId,
+             taobaoId,
              qq,
-             writetime,
+             writeTime,
              photo1,
              photo2,
              photo3,
@@ -55,7 +54,6 @@
         #{number},
         #{name},
         #{phone},
-        #{roleId},
         #{areaId},
         #{sms},
         #{statusId},
@@ -64,7 +62,7 @@
         #{alipayId},
         #{taobaoId},
         #{qq},
-        #{writetime},
+        #{writeTime},
         #{photo1},
         #{photo2},
         #{photo3},
@@ -75,16 +73,16 @@
         update  s_user set
         number=#{number},
         phone=#{phone},
-        role_id=#{roleId},
-        area_id=#{areaId},
+        roleId=#{roleId},
+        areaId=#{areaId},
         sms=#{sms},
-        status_id=#{statusId},
-        id_card=#{idCard},
-        bank_card=#{bankCard},
-        alipay_id=#{alipayId},
-        taobao_id=#{taobaoId},
+        statusId=#{statusId},
+        idCard=#{idCard},
+        bankCard=#{bankCard},
+        alipayId=#{alipayId},
+        taobaoId=#{taobaoId},
         qq=#{qq},
-        writetime=#{writetime},
+        writeTime=#{writeTime},
         photo1=#{photo1},
         photo2=#{photo2},
         photo3=#{photo3},
@@ -93,7 +91,7 @@
     </update>
 
     <update id="disableUser" parameterType="string">
-        update  s_user set  status_id=4 where phone=#{phone}
+        update  s_user set  statusId=4 where phone=#{phone}
     </update>
 
 </mapper>

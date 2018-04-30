@@ -12,7 +12,7 @@ public class AuthUtil {
      * @param password
      * @return
      */
-    public String getHashPassword(String user, String password) {
+    public static String getHashPassword(String user, String password) {
         Object result = new SimpleHash("MD5", password, ByteSource.Util.bytes(user), 1024);
         return result.toString();
     }
