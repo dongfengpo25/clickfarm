@@ -11,6 +11,7 @@ public class FilterChainDefinitionMapBuilder {
 
         map.put("/login.html", "anon");
         map.put("/login", "anon");
+        map.put("/getGifCode", "anon");
         map.put("/userLogin", "anon");
         map.put("/logout", "logout");
         map.put("/main.html", "user");

@@ -7,13 +7,7 @@ import com.hzl.web.shiro.bean.Permission;
 import com.hzl.web.shiro.bean.Role;
 import com.hzl.web.shiro.bean.UserInfo;
 import com.hzl.web.shiro.service.impl.UserServiceImpl;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -44,13 +38,18 @@ public class ShiroRealm extends AuthorizingRealm {
         System.out.println("从数据库中获取 username: " + username + " 所对应的用户信息.");
 
         //4. 若用户不存在, 则可以抛出 UnknownAccountException 异常
-        if ("unknown".equals(username)) {
+        if (userInfo == null) {
             throw new UnknownAccountException("用户不存在!");
         }
-
+        if (userInfo.getStatusId() == 1) {
+            throw new AccountException("用户待审核");
+        }
+        if (userInfo.getStatusId() == 3) {
+            throw new AccountException("用户审核不通过");
+        }
         //5. 根据用户信息的情况, 决定是否需要抛出其他的 AuthenticationException 异常.
-        if ("monster".equals(username)) {
-            throw new LockedAccountException("用户被锁定");
+        if (userInfo.getStatusId() == 4) {
+            throw new DisabledAccountException("用户被禁用");
         }
 
         //6. 根据用户的情况, 来构建 AuthenticationInfo 对象并返回. 通常使用的实现类为: SimpleAuthenticationInfo
