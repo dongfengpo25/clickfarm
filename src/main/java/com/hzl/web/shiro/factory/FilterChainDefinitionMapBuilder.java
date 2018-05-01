@@ -8,9 +8,12 @@ public class FilterChainDefinitionMapBuilder {
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
         map.put("/images/**", "anon");
         map.put("/js/**", "anon");
+        map.put("/css/**", "anon");
+
         map.put("/register", "anon");
-        map.put("/register/**", "anon");
         map.put("/register.html", "anon");
+        map.put("/register/**", "anon");
+
         map.put("/login.html", "anon");
         map.put("/login", "anon");
         map.put("/getGifCode", "anon");

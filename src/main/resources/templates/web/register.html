@@ -6,148 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, userInfo-scalable=no">
     <title>商家注册</title>
     <meta name="renderer" content="webkit">
-    <script src="js/B-JUI/js/jquery-1.11.3.min.js"></script>
-    <script src="js/B-JUI/js/jquery.cookie.js"></script>
-    <link href="js/B-JUI/themes/css/bootstrap.min.css" rel="stylesheet">
-    <style type="text/css">
-        html, body {
-            height: 100%;
-            overflow: hidden;
-        }
-
-        body {
-            font-family: "Verdana", "Tahoma", "Lucida Grande", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
-            background: url(images/login/loginbg_01.jpg) no-repeat center center fixed;
-            background-size: cover;
-        }
-
-        .form-control {
-            height: 37px;
-        }
-
-        .main_box {
-            position: absolute;
-            top: 45%;
-            left: 50%;
-            margin: -200px 0 0 -180px;
-            padding: 15px 20px;
-            width: 360px;
-            height: 400px;
-            min-width: 320px;
-            background: #FAFAFA;
-            background: rgba(255, 255, 255, 0.5);
-            box-shadow: 1px 5px 8px #888888;
-            border-radius: 6px;
-        }
-
-        .login_msg {
-            height: 30px;
-        }
-
-        .input-group > .input-group-addon.code {
-            padding: 0;
-        }
-
-        #captcha_img {
-            cursor: pointer;
-        }
-
-        @media (min-width: 768px) {
-            .main_box {
-                margin-left: -240px;
-                padding: 15px 55px;
-                width: 480px;
-            }
-
-        }
-    </style>
-    <script th:inline="javascript" type="text/javascript">
-        $(function () {
-
-            choose_bg();
-            //changeCode();
-
-            $("#captcha_img").click(function () {
-                changeCode();
-            });
-            $("#register_form").submit(function () {
-                var issubmit = true;
-                var i_index = 0;
-                $(this).find('.form-control').each(function (i) {
-                    if ($.trim($(this).val()).length == 0) {
-                        $(this).css('border', '1px #ff0000 solid');
-                        issubmit = false;
-                        if (i_index == 0)
-                            i_index = i;
-                    }
-                });
-
-                if (!isPoneAvailable($.trim($("#j_phone").val()))){
-                    $("#j_phone").val("");
-                    $("#j_phone").css('border', '1px #ff0000 solid');
-                    $("#j_phone").focus();
-
-                    return false;
-                }
-
-                if (!issubmit) {
-                    $(this).find('.form-control').eq(i_index).focus();
-                    return false;
-                }
-
-                $("#login_ok").attr("disabled", true).val('正在注册中..');
-
-            });
-        });
-
-        function isPoneAvailable(str) {
-            var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
-            if (!myreg.test(str)) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        function changeCode() {
-            $("#captcha_img").attr("src", "getGifCode?t=" + (new Date().getTime()));
-        }
-
-        function choose_bg() {
-            var bg = Math.floor(Math.random() * 9 + 1);
-            $('body').css('background-image', 'url(images/login/loginbg_0' + bg + '.jpg)');
-        }
-    </script>
+    <script th:src="@{/js/B-JUI/js/jquery-1.11.3.min.js}"></script>
+    <script th:src="@{/js/B-JUI/js/jquery.cookie.js}"></script>
+    <script th:src="@{/js/register.js}"></script>
+    <link th:href="@{/js/B-JUI/themes/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/common/errorid.css}" rel="stylesheet">
+    <link th:href="@{/css/register.css}" rel="stylesheet">
 </head>
 <body>
 <!--[if lte IE 7]>
-<style type="text/css">
-    #errorie {
-        position: fixed;
-        top: 0;
-        z-index: 100000;
-        height: 30px;
-        background: #FCF8E3;
-    }
-
-    #errorie div {
-        width: 900px;
-        margin: 0 auto;
-        line-height: 30px;
-        color: orange;
-        font-size: 14px;
-        text-align: center;
-    }
-
-    #errorie div a {
-        color: #459f79;
-        font-size: 14px;
-    }
-
-    #errorie div a:hover {
-        text-decoration: underline;
-    }
-</style>
 <div id="errorie">
     <div>您还在使用老掉牙的IE，请升级您的浏览器到 IE8以上版本 <a target="_blank"
                                           href="http://windows.microsoft.com/zh-cn/internet-explorer/ie-8-worldwide-languages">点击升级</a>&nbsp;&nbsp;强烈建议您更改换浏览器：<a
@@ -156,11 +23,11 @@
 <![endif]-->
 <div class="container">
     <div class="main_box">
-        <form th:action="@{/register/commit}" id="register_form" method="post">
-            <p class="text-center logo"><img src="images/login/logo.jpg" height="65"></p>
+        <form th:action="@{/register/pcuser}" id="register_form" method="post">
+            <p class="text-center logo"><img th:src="@{/images/login/logo.jpg}" height="65"></p>
 
-            <div style="color: red" class="login_msg text-center" th:text="${msg}"
-                 th:if="${not #strings.isEmpty(msg)}"></div>
+            <div style="color: red" class="login_msg text-center" th:text="${#request.getParameter('msg')}"
+                 th:if="${not #strings.isEmpty(#request.getParameter('msg'))}"></div>
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon-name"><span

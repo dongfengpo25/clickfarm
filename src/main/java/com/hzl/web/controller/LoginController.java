@@ -33,47 +33,17 @@ public class LoginController extends BaseController {
     public String login(Model model, HttpServletRequest request, HttpServletResponse response,
                         @RequestParam("username") String username,
                         @RequestParam("password") String password,
-                        @RequestParam("captcha") String captcha,
+                        @RequestParam(value = "captcha", defaultValue = "") String captcha,
                         @RequestParam(value = "remember", required = false, defaultValue = "false") boolean remember,
                         Map<String, Object> map) throws Exception {
-
-        Session session = SecurityUtils.getSubject().getSession();
-        String captcha_server = (String) session.getAttribute(_code);
-        if (StringUtil.isEmpty(captcha_server)) {
-            map.put("msg", "验证码错误！");
-            return login_html;
-        }
-        //还可以读取一次后把验证码清空，这样每次登录都必须获取验证码
-        session.removeAttribute(_code);
-        if (!captcha_server.equalsIgnoreCase(captcha)) {
-            map.put("msg", "验证码错误！");
+        JSONObject json = doLogin(username, password, captcha, remember);
+        if (json.get("succ").equals(true)) {
+            return "redirect:/main.html";
+        } else {
+            map.put("msg", json.get("msg"));
             return login_html;
         }
 
-        Subject currentUser = SecurityUtils.getSubject();
-
-        if (!currentUser.isAuthenticated()) {
-            // 把用户名和密码封装为 UsernamePasswordToken 对象
-            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-            // rememberme
-            token.setRememberMe(remember);
-            try {
-                // 执行登录.
-                currentUser.login(token);
-            } catch (IncorrectCredentialsException e) {
-                map.put("msg", "用户名或密码错误");
-            }
-            // ... catch more exceptions here (maybe custom ones specific to your application?
-            // 所有认证时异常的父类.
-            catch (AuthenticationException e) {
-                map.put("msg", e.getMessage());
-            }
-        }
-        if (map.size() > 0) {
-            return login_html;
-        }
-
-        return "redirect:/main.html";
         //request.getRequestDispatcher("/login").forward(request, response);
     }
 
@@ -82,12 +52,53 @@ public class LoginController extends BaseController {
     public Object mlogin(Model model, HttpServletRequest request, HttpServletResponse response,
                          @RequestParam("username") String username,
                          @RequestParam("password") String password) throws Exception {
+        return doLogin(username, password, null, false);
+    }
+
+    private JSONObject doLogin(String username, String password, String captcha, boolean remember) throws Exception {
         JSONObject json = new JSONObject();
-        if (!StringUtils.isEmpty(username) && "admin".equals(password)) {
-            json.put("succ", "true");
-        } else {
-            json.put("succ", "false");
-            json.put("msg", "用户名密码错误");
+        json.put("succ", false);
+        try {
+            if (captcha != null) {
+                Session session = SecurityUtils.getSubject().getSession();
+                String captcha_server = (String) session.getAttribute(_code);
+                if (StringUtil.isEmpty(captcha_server)) {
+                    json.put("msg", "验证码错误！");
+                    return json;
+                }
+                //还可以读取一次后把验证码清空，这样每次登录都必须获取验证码
+                session.removeAttribute(_code);
+                if (!captcha_server.equalsIgnoreCase(captcha)) {
+                    json.put("msg", "验证码错误！");
+                    return json;
+                }
+            }
+
+            Subject currentUser = SecurityUtils.getSubject();
+            if (!currentUser.isAuthenticated()) {
+                // 把用户名和密码封装为 UsernamePasswordToken 对象
+                UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+                // rememberme
+                token.setRememberMe(remember);
+                try {
+                    // 执行登录.
+                    currentUser.login(token);
+                } catch (IncorrectCredentialsException e) {
+                    json.put("msg", "用户名或密码错误");
+                    return json;
+                }
+                // ... catch more exceptions here (maybe custom ones specific to your application?
+                // 所有认证时异常的父类.
+                catch (AuthenticationException e) {
+                    json.put("msg", e.getMessage());
+                    return json;
+                }
+            }
+
+            json.put("succ", true);
+            //request.getRequestDispatcher("/login").forward(request, response);
+        } catch (Exception e) {
+            json.put("msg", e.getMessage());
         }
         return json;
     }
