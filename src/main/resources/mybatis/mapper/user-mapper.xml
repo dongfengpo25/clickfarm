@@ -8,7 +8,8 @@
     </resultMap>
 
     <resultMap id="roleResult" type="Role">
-        <collection property="permissions" javaType="ArrayList" column="id" ofType="Permission" select="selectPermissionForRole"/>
+        <collection property="permissions" javaType="ArrayList" column="id" ofType="Permission"
+                    select="selectPermissionForRole"/>
     </resultMap>
 
     <select id="selectPermissionForRole" resultType="Permission">
@@ -19,7 +20,7 @@
         SELECT a.* FROM s_role a LEFT JOIN s_user_role b ON a.id =b.`rid` WHERE b.`uid` = #{id} and a.enable = 1
     </select>
 
-    <select id="query"  resultMap="userInfoResult">
+    <select id="query" resultMap="userInfoResult">
         select * from s_user
     </select>
 
@@ -70,24 +71,61 @@
     </insert>
 
     <update id="editUser" parameterType="UserInfo">
-        update  s_user set
-        number=#{number},
-        phone=#{phone},
-        roleId=#{roleId},
-        areaId=#{areaId},
-        sms=#{sms},
-        statusId=#{statusId},
-        idCard=#{idCard},
-        bankCard=#{bankCard},
-        alipayId=#{alipayId},
-        taobaoId=#{taobaoId},
-        qq=#{qq},
-        writeTime=#{writeTime},
-        photo1=#{photo1},
-        photo2=#{photo2},
-        photo3=#{photo3},
-        password=#{password}
-        where id=#{id}
+        update s_user
+        <set>
+            <if test="number != null and number != '' ">
+                number=#{number},
+            </if>
+            <if test="phone != null and phone != '' ">
+                phone=#{phone},
+            </if>
+            <if test="areaId != null and areaId != '' ">
+                areaId=#{areaId},
+            </if>
+            <if test="sms != null and sms != '' ">
+                sms=#{sms},
+            </if>
+            <if test="statusId != null and statusId != '' ">
+                statusId=#{statusId},
+            </if>
+            <if test="idCard != null and idCard != '' ">
+                idCard=#{idCard},
+            </if>
+            <if test="bankCard != null and bankCard != '' ">
+                bankCard=#{bankCard},
+            </if>
+            <if test="alipayId != null and alipayId != '' ">
+                alipayId=#{alipayId},
+            </if>
+            <if test="taobaoId != null and taobaoId != '' ">
+                taobaoId=#{taobaoId},
+            </if>
+            <if test="qq != null and qq != '' ">
+                qq=#{qq},
+            </if>
+            <if test="writeTime != null and writeTime != '' ">
+                writeTime=#{writeTime},
+            </if>
+            <if test="photo1 != null and photo1 != '' ">
+                photo1=#{photo1},
+            </if>
+            <if test="photo2 != null and photo2 != '' ">
+                photo2=#{photo2},
+            </if>
+            <if test="photo3 != null and photo3 != '' ">
+                photo3=#{photo3},
+            </if>
+            <if test="password != null and password != '' ">
+                password=#{password},
+            </if>
+            <if test="tradePassword != null and tradePassword != '' ">
+                tradePassword=#{tradePassword},
+            </if>
+            <if test="oldPhone != null and oldPhone != '' ">
+                oldPhone=#{oldPhone},
+            </if>
+        </set>
+        where phone=#{phone}
     </update>
 
     <update id="disableUser" parameterType="string">

@@ -19,4 +19,5 @@ public interface UserInfoDao {
     public void editUser(UserInfo userInfo);
 
     public void disableUser(String phone);
+
 }

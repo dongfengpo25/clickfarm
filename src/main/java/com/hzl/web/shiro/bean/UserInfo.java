@@ -14,6 +14,8 @@ public class UserInfo {
     private String name;
     //手机号
     private String phone;
+    //旧手机号
+    private String oldPhone;
     //角色
     private int roleId;
     //地区
@@ -38,6 +40,8 @@ public class UserInfo {
     private String lastLoginTime;
     //密码
     private String password;
+    //交易密码
+    private String tradePassword;
     //身份证正面文件名
     private String photo1;
     //身份证反面文件名
@@ -205,5 +209,21 @@ public class UserInfo {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getOldPhone() {
+        return oldPhone;
+    }
+
+    public void setOldPhone(String oldPhone) {
+        this.oldPhone = oldPhone;
+    }
+
+    public String getTradePassword() {
+        return tradePassword;
+    }
+
+    public void setTradePassword(String tradePassword) {
+        this.tradePassword = tradePassword;
     }
 }
