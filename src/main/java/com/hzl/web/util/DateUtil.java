@@ -11,8 +11,20 @@ public class DateUtil {
      * @return
      */
     public static String getCurrDateTime() {
+        return getCurrDateStr("yyyy-MM-dd HH:mm:ss");
+    }
+
+    public static String getCurrDate() {
+        return getCurrDateStr("yyyy-MM-dd");
+    }
+
+    public static String getUploadDate() {
+        return getCurrDateStr("yyyyMMdd");
+    }
+
+    public static String getCurrDateStr(String formt) {
         Date d = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat(formt);
         return sdf.format(d);
     }
 }

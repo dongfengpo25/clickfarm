@@ -1,5 +1,6 @@
 package com.hzl.web.controller.login;
 
+import com.hzl.web.bean.response.ResponseJson;
 import com.hzl.web.controller.BaseController;
 import com.hzl.web.shiro.bean.UserInfo;
 import com.hzl.web.shiro.service.impl.UserServiceImpl;
@@ -7,12 +8,7 @@ import com.hzl.web.util.AuthUtil;
 import com.hzl.web.util.DateUtil;
 import com.hzl.web.util.StringUtil;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,11 +59,11 @@ public class RegisterControlller extends BaseController {
                            @RequestParam("captcha") String captcha,
                            Map<String, Object> map,
                            RedirectAttributes redirectAttributes) throws Exception {
-        JSONObject json = doRegister(name, phone, password, captcha);
+        ResponseJson json = doRegister(name, phone, password, captcha);
         if (json.get(_succ).equals(true)) {
             return "redirect:/login.html";
         } else {
-            map.put(_msg, json.get(_msg));
+            redirectAttributes.addAttribute(_msg, json.get(_msg));
             return redirect_register_html;
         }
     }
@@ -95,8 +91,8 @@ public class RegisterControlller extends BaseController {
         return doRegister(null, phone, password, null);
     }
 
-    private JSONObject doRegister(String name, String phone, String password, String captcha) throws Exception {
-        JSONObject json = new JSONObject();
+    private ResponseJson doRegister(String name, String phone, String password, String captcha) throws Exception {
+        ResponseJson json = new ResponseJson();
         json.put(_succ, false);
         try {
 //            if (StringUtil.isEmpty(name)) {

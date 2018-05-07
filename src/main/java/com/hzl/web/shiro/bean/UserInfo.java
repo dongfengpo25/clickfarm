@@ -36,6 +36,8 @@ public class UserInfo {
     private String qq;
     //注册时间
     private String writeTime;
+    //编辑时间
+    private String editTime;
     //最后一次登录时间
     private String lastLoginTime;
     //密码
@@ -43,11 +45,13 @@ public class UserInfo {
     //交易密码
     private String tradePassword;
     //身份证正面文件名
-    private String photo1;
+    private String pic1;
     //身份证反面文件名
-    private String photo2;
+    private String pic2;
     //身份证手持正面文件名
-    private String photo3;
+    private String pic3;
+    //用户级别
+    private int level;
     //角色列表
     private List<Role> roles;
 
@@ -171,28 +175,28 @@ public class UserInfo {
         this.password = password;
     }
 
-    public String getPhoto1() {
-        return photo1;
+    public String getPic1() {
+        return pic1;
     }
 
-    public void setPhoto1(String photo1) {
-        this.photo1 = photo1;
+    public void setPic1(String pic1) {
+        this.pic1 = pic1;
     }
 
-    public String getPhoto2() {
-        return photo2;
+    public String getPic2() {
+        return pic2;
     }
 
-    public void setPhoto2(String photo2) {
-        this.photo2 = photo2;
+    public void setPic2(String pic2) {
+        this.pic2 = pic2;
     }
 
-    public String getPhoto3() {
-        return photo3;
+    public String getPic3() {
+        return pic3;
     }
 
-    public void setPhoto3(String photo3) {
-        this.photo3 = photo3;
+    public void setPic3(String pic3) {
+        this.pic3 = pic3;
     }
 
     public String getLastLoginTime() {
@@ -225,5 +229,21 @@ public class UserInfo {
 
     public void setTradePassword(String tradePassword) {
         this.tradePassword = tradePassword;
+    }
+
+    public String getEditTime() {
+        return editTime;
+    }
+
+    public void setEditTime(String editTime) {
+        this.editTime = editTime;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

@@ -32,17 +32,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(UserInfo userInfo) {
-        userInfoDao.addUser(userInfo);
+    public boolean addUser(UserInfo userInfo) {
+        return userInfoDao.addUser(userInfo);
     }
 
     @Override
-    public void editUser(UserInfo userInfo) {
-        userInfoDao.editUser(userInfo);
+    public boolean editUser(UserInfo userInfo) {
+        return userInfoDao.editUser(userInfo);
     }
 
     @Override
-    public void disableUser(String phone) {
-        userInfoDao.disableUser(phone);
+    public boolean disableUser(String phone) {
+        return userInfoDao.disableUser(phone);
+    }
+
+    @Override
+    public boolean editPassword(String phone, String password) {
+        UserInfo user = new UserInfo();
+        user.setPhone(phone);
+        user.setPassword(password);
+        return userInfoDao.editUser(user);
     }
 }

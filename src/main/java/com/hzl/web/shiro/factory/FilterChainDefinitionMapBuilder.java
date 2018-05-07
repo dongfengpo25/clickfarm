@@ -25,6 +25,9 @@ public class FilterChainDefinitionMapBuilder {
         map.put("/bindShop", "user");
         map.put("/druid/**", "authc, roles[\"admin\"]");
 
+        map.put("/user/auth/**", "authc");
+        map.put("/user/**", "anon");
+
         map.put("/**", "authc");
         return map;
     }

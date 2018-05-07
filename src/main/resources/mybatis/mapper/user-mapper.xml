@@ -34,7 +34,7 @@
 
     <insert id="addUser" parameterType="UserInfo">
         INSERT INTO s_user
-            (id,
+            (
              number,
              name,
              phone,
@@ -47,11 +47,15 @@
              taobaoId,
              qq,
              writeTime,
-             photo1,
-             photo2,
-             photo3,
-             password)
-           VALUES (#{id},
+             pic1,
+             pic2,
+             pic3,
+             password,
+             lastLoginTime,
+             tradePassword,
+             oldPhone,
+             level)
+           VALUES (
         #{number},
         #{name},
         #{phone},
@@ -64,10 +68,14 @@
         #{taobaoId},
         #{qq},
         #{writeTime},
-        #{photo1},
-        #{photo2},
-        #{photo3},
-        #{password})
+        #{pic1},
+        #{pic2},
+        #{pic3},
+        #{password},
+        #{lastLoginTime},
+        #{tradePassword},
+        #{oldPhone},
+        #{level})
     </insert>
 
     <update id="editUser" parameterType="UserInfo">
@@ -76,7 +84,7 @@
             <if test="number != null and number != '' ">
                 number=#{number},
             </if>
-            <if test="phone != null and phone != '' ">
+            <if test="phone != null and phone != '' and oldPhone != null and oldPhone != '' ">
                 phone=#{phone},
             </if>
             <if test="areaId != null and areaId != '' ">
@@ -103,17 +111,17 @@
             <if test="qq != null and qq != '' ">
                 qq=#{qq},
             </if>
-            <if test="writeTime != null and writeTime != '' ">
-                writeTime=#{writeTime},
+            <if test="editTime != null and editTime != '' ">
+                editTime=#{editTime},
             </if>
-            <if test="photo1 != null and photo1 != '' ">
-                photo1=#{photo1},
+            <if test="pic1 != null and pic1 != '' ">
+                pic1=#{pic1},
             </if>
-            <if test="photo2 != null and photo2 != '' ">
-                photo2=#{photo2},
+            <if test="pic2 != null and pic2 != '' ">
+                pic2=#{pic2},
             </if>
-            <if test="photo3 != null and photo3 != '' ">
-                photo3=#{photo3},
+            <if test="pic3 != null and pic3 != '' ">
+                pic3=#{pic3},
             </if>
             <if test="password != null and password != '' ">
                 password=#{password},
@@ -125,7 +133,81 @@
                 oldPhone=#{oldPhone},
             </if>
         </set>
-        where phone=#{phone}
+        where
+        <choose>
+            <when test="phone != null and phone != '' and oldPhone != null and oldPhone != '' ">
+                  phone=#{oldPhone};
+            </when>
+            <otherwise>
+                  phone=#{phone};
+            </otherwise>
+        </choose>
+
+        <!-- 插入修改日志-->
+        <if test="number != null and number != '' ">
+            insert into  s_user_log(uid,propName,propDesc,newValue,writeTime)
+            values(#{id},'number','编号',#{number},#{editTime});
+        </if>
+        <if test="phone != null and phone != '' and oldPhone != null and oldPhone != '' ">
+            insert into  s_user_log(uid,propName,propDesc,oldValue,newValue,writeTime)
+            values(#{id},'phone','手机号',#{oldPhone},#{phone},#{editTime});
+        </if>
+        <if test="areaId != null and areaId != '' ">
+            insert into  s_user_log(uid,propName,propDesc,newValue,writeTime)
+            values(#{id},'areaId','地区ID',#{areaId},#{editTime});
+        </if>
+        <if test="sms != null and sms != '' ">
+            insert into  s_user_log(uid,propName,propDesc,newValue,writeTime)
+            values(#{id},'sms','短信验证码',#{sms},#{editTime});
+        </if>
+        <if test="statusId != null and statusId != '' ">
+            insert into  s_user_log(uid,propName,propDesc,newValue,writeTime)
+            values(#{id},'statusId','状态ID',#{statusId},#{editTime});
+        </if>
+        <if test="idCard != null and idCard != '' ">
+            insert into  s_user_log(uid,propName,propDesc,newValue,writeTime)
+            values(#{id},'idCard','身份证号',#{idCard},#{editTime});
+        </if>
+        <if test="bankCard != null and bankCard != '' ">
+            insert into  s_user_log(uid,propName,propDesc,newValue,writeTime)
+            values(#{id},'bankCard','银行卡号',#{bankCard},#{editTime});
+        </if>
+        <if test="alipayId != null and alipayId != '' ">
+            insert into  s_user_log(uid,propName,propDesc,newValue,writeTime)
+            values(#{id},'alipayId','支付宝帐号',#{alipayId},#{editTime});
+        </if>
+        <if test="taobaoId != null and taobaoId != '' ">
+            insert into  s_user_log(uid,propName,propDesc,newValue,writeTime)
+            values(#{id},'taobaoId','淘宝帐号',#{taobaoId},#{editTime});
+        </if>
+        <if test="qq != null and qq != '' ">
+            insert into  s_user_log(uid,propName,propDesc,newValue,writeTime)
+            values(#{id},'qq','QQ',#{qq},#{editTime});
+        </if>
+        <if test="pic1 != null and pic1 != '' ">
+            insert into  s_user_log(uid,propName,propDesc,newValue,writeTime)
+            values(#{id},'pic1','身份证正面',#{pic1},#{editTime});
+        </if>
+        <if test="pic2 != null and pic2 != '' ">
+            insert into  s_user_log(uid,propName,propDesc,newValue,writeTime)
+            values(#{id},'pic2','身份证反面',#{pic2},#{editTime});
+        </if>
+        <if test="pic3 != null and pic3 != '' ">
+            insert into  s_user_log(uid,propName,propDesc,newValue,writeTime)
+            values(#{id},'pic3','手持身份证',#{pic3},#{editTime});
+        </if>
+        <if test="password != null and password != '' ">
+            insert into  s_user_log(uid,propName,propDesc,newValue,writeTime)
+            values(#{id},'password','登录密码',#{password},#{editTime});
+        </if>
+        <if test="tradePassword != null and tradePassword != '' ">
+            insert into  s_user_log(uid,propName,propDesc,newValue,writeTime)
+            values(#{id},'tradePassword','交易密码',#{tradePassword},#{editTime});
+        </if>
+        <if test="level != null and level != '' ">
+            insert into  s_user_log(uid,propName,propDesc,newValue,writeTime)
+            values(#{id},'level','用户级别',#{level},#{editTime});
+        </if>
     </update>
 
     <update id="disableUser" parameterType="string">

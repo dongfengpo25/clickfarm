@@ -26,17 +26,18 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao {
     }
 
     @Override
-    public void addUser(UserInfo userInfo) {
-        sqlSession.update("userInfo.addUser", userInfo);
+    public boolean addUser(UserInfo userInfo) {
+        return sqlSession.update("userInfo.addUser", userInfo) > 0;
     }
 
     @Override
-    public void editUser(UserInfo userInfo) {
-        sqlSession.update("userInfo.editUser", userInfo);
+    public boolean editUser(UserInfo userInfo) {
+        return sqlSession.update("userInfo.editUser", userInfo) > 0;
     }
 
     @Override
-    public void disableUser(String phone) {
-        sqlSession.update("userInfo.disableUser", phone);
+    public boolean disableUser(String phone) {
+        return sqlSession.update("userInfo.disableUser", phone) >0;
     }
+
 }

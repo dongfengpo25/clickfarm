@@ -2,7 +2,8 @@
 SQLyog Ultimate v10.00 Beta1
 MySQL - 5.1.37-community : Database - clickfarm
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -222,7 +223,7 @@ CREATE TABLE `s_user` (
   `taobaoId` varchar(50) DEFAULT NULL COMMENT '淘宝',
   `qq` varchar(50) DEFAULT NULL COMMENT 'QQ',
   `writeTime` datetime DEFAULT NULL COMMENT '注册时间',
-  `photo1` varchar(200) DEFAULT NULL COMMENT '正面文件名',
+  `pic` varchar(200) DEFAULT NULL COMMENT '正面文件名',
   `photo2` varchar(200) DEFAULT NULL COMMENT '反面文件名',
   `photo3` varchar(200) DEFAULT NULL COMMENT '手持身份证文件名',
   `password` varchar(50) DEFAULT NULL COMMENT '登录密码',
@@ -237,7 +238,7 @@ CREATE TABLE `s_user` (
 
 /*Data for the table `s_user` */
 
-insert  into `s_user`(`id`,`number`,`name`,`phone`,`areaId`,`sms`,`statusId`,`idCard`,`bankCard`,`alipayId`,`taobaoId`,`qq`,`writeTime`,`photo1`,`photo2`,`photo3`,`password`,`lastLoginTime`,`tradePassword`,`oldPhone`,`level`) values (1,'admin',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'038bdaf98f2037b31f1e75b5b4c9b26e',NULL,NULL,NULL,55),(2,'user',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'098d2c478e9c11555ce2823231e02ec1',NULL,NULL,NULL,55),(3,'13705069096','黄志霖','13705069096',0,NULL,2,NULL,NULL,NULL,NULL,NULL,'2018-04-30 23:19:37',NULL,NULL,NULL,'5c9670e301947249bc11c98a19e7619c',NULL,NULL,NULL,55);
+insert  into `s_user`(`id`,`number`,`name`,`phone`,`areaId`,`sms`,`statusId`,`idCard`,`bankCard`,`alipayId`,`taobaoId`,`qq`,`writeTime`,`pic`,`photo2`,`photo3`,`password`,`lastLoginTime`,`tradePassword`,`oldPhone`,`level`) values (1,'admin',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'038bdaf98f2037b31f1e75b5b4c9b26e',NULL,NULL,NULL,55),(2,'user',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'098d2c478e9c11555ce2823231e02ec1',NULL,NULL,NULL,55),(3,'13705069096','黄志霖','13705069096',0,NULL,2,NULL,NULL,NULL,NULL,NULL,'2018-04-30 23:19:37',NULL,NULL,NULL,'5c9670e301947249bc11c98a19e7619c',NULL,NULL,NULL,55);
 
 /*Table structure for table `s_user_log` */
 

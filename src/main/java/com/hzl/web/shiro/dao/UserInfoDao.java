@@ -14,10 +14,9 @@ public interface UserInfoDao {
 
     public UserInfo getUserInfoByNumber(String number);
 
-    public void addUser(UserInfo userInfo);
+    public boolean addUser(UserInfo userInfo);
 
-    public void editUser(UserInfo userInfo);
+    public boolean editUser(UserInfo userInfo);
 
-    public void disableUser(String phone);
-
+    public boolean disableUser(String phone);
 }

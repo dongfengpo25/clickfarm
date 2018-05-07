@@ -38,4 +38,9 @@ public class MenuController {
     public String showShop(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "web/shop/showshops.html";
     }
+
+    @RequestMapping(value = "/uploadFile")
+    public String uploadFile(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "test/uploadFile.html";
+    }
 }
