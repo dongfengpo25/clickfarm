@@ -23,4 +23,9 @@ public class FileResponseJson extends ResponseJson implements IFileResponse {
         files.add(file);
     }
 
+    @Override
+    public void setMsg(String msg) {
+        super.setMsg(msg);
+        put(_message, msg);
+    }
 }

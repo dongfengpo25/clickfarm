@@ -77,6 +77,7 @@ public class FileController {
      */
     private FileResponseJson uploadFile(MultipartFile file) {
         FileResponseJson json = new FileResponseJson();
+        json.put("statusCode", 500);
         if (file.isEmpty()) {
             json.setSucc(false);
             json.setMsg("上传文件为空.");
@@ -84,6 +85,8 @@ public class FileController {
         } else {
             try {
                 doUploadFile(file, json);
+                //这一行很重要，否则bjui-all.js的18199行状态返回值为空，会抛null异常
+                json.put("statusCode", 200);
                 return json;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -102,6 +105,7 @@ public class FileController {
      */
     private FileResponseJson uploadFiles(List<MultipartFile> files) {
         FileResponseJson json = new FileResponseJson();
+        json.put("statusCode", 500);
         try {
             MultipartFile file = null;
             BufferedOutputStream stream = null;
@@ -128,6 +132,8 @@ public class FileController {
                     return json;
                 }
             }
+            //这一行很重要，否则bjui-all.js的18199行状态返回值为空，会抛null异常
+            json.put("statusCode", 200);
         } catch (Exception e) {
             e.printStackTrace();
             json.setSucc(false);
