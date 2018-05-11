@@ -7,12 +7,18 @@ import com.hzl.web.util.DateUtil;
 import com.hzl.web.util.FileUtil;
 import com.hzl.web.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -36,6 +42,18 @@ public class FileController {
     }
 
     /**
+     * 上传用户信息文件或图片
+     *
+     * @param file
+     * @param request
+     * @return
+     */
+    @PostMapping("/upload/userinfo")
+    public Object uploadUser(@RequestParam(_file) MultipartFile file, HttpServletRequest request) {
+        return uploadUserFile(file);
+    }
+
+    /**
      * 多文件上传
      *
      * @param request
@@ -52,14 +70,19 @@ public class FileController {
      *
      * @param file
      * @param json
+     * @param isUser 是否用户信息
      * @throws Exception
      */
-    private void doUploadFile(MultipartFile file, FileResponseJson json) throws Exception {
+    private void doUploadFile(MultipartFile file, FileResponseJson json, boolean isUser) throws Exception {
         String originalFilename = file.getOriginalFilename();
         String savePath = getSavePath(originalFilename);
-        json.setFilename(savePath);
-        json.addFile(originalFilename, savePath);
-        String filePath = getHeadPath(originalFilename) + savePath;
+        json.setFileName(savePath);
+        json.setOriginalName(originalFilename);
+        String headPath = getHeadPath(isUser, originalFilename);
+        if (StringUtil.isEmpty(headPath)) {
+            throw new Exception("上传路径为空");
+        }
+        String filePath = headPath + savePath;
         File saveFile = new File(filePath);
         if (!saveFile.getParentFile().exists()) {
             saveFile.getParentFile().mkdirs();
@@ -68,6 +91,10 @@ public class FileController {
         out.write(file.getBytes());
         out.flush();
         out.close();
+    }
+
+    private void doUploadFile(MultipartFile file, FileResponseJson json) throws Exception {
+        doUploadFile(file, json, false);
     }
 
     /**
@@ -86,7 +113,34 @@ public class FileController {
             try {
                 doUploadFile(file, json);
                 //这一行很重要，否则bjui-all.js的18199行状态返回值为空，会抛null异常
-                json.setStatusCode( 200);
+                json.setStatusCode(200);
+                return json;
+            } catch (Exception e) {
+                e.printStackTrace();
+                json.setSucc(false);
+                json.setMsg("上传失败:" + e.getMessage());
+                return json;
+            }
+        }
+    }
+
+    /**
+     * 处理单文件上传
+     *
+     * @param file
+     * @return
+     */
+    private FileResponseJson uploadUserFile(MultipartFile file) {
+        FileResponseJson json = new FileResponseJson();
+        if (file.isEmpty()) {
+            json.setSucc(false);
+            json.setMsg("上传文件为空.");
+            return json;
+        } else {
+            try {
+                doUploadFile(file, json, true);
+                //这一行很重要，否则bjui-all.js的18199行状态返回值为空，会抛null异常
+                json.setStatusCode(200);
                 return json;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -132,7 +186,7 @@ public class FileController {
                 }
             }
             //这一行很重要，否则bjui-all.js的18199行状态返回值为空，会抛null异常
-            json.setStatusCode( 200);
+            json.setStatusCode(200);
         } catch (Exception e) {
             e.printStackTrace();
             json.setSucc(false);
@@ -148,7 +202,9 @@ public class FileController {
      * @param originalFilename 原始文件名
      * @return
      */
-    private String getHeadPath(String originalFilename) {
+    private String getHeadPath(boolean isUser, String originalFilename) {
+        if (isUser)
+            return debugProperties.getUploadUserPicPath();
         if (!StringUtil.isEmpty(originalFilename)) {
             String ext = FileUtil.getFileExt(originalFilename);
             if (!StringUtil.isEmpty(ext)) {
@@ -186,4 +242,51 @@ public class FileController {
         }
         return "";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/view/{datePath:.+}/{filePath:.+}")
+    public ResponseEntity<?> getFile(@PathVariable String datePath, @PathVariable String filePath) {
+        return viewPic(datePath, filePath, false);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/view/userinfo/{datePath:.+}/{filePath:.+}")
+    public ResponseEntity<?> getUserInfoFile(@PathVariable String datePath, @PathVariable String filePath) {
+        return viewPic(datePath, filePath, true);
+    }
+
+    private ResponseEntity<?> viewPic(String datePath, String filePath, boolean isUser) {
+        try {
+            return ResponseEntity.ok(loadResource(datePath + File.separator + filePath, true));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
+     * 加载资源文件
+     *
+     * @param filePath
+     * @param isUser
+     * @return
+     * @throws Exception
+     */
+    private Resource loadResource(String filePath, boolean isUser) throws Exception {
+        try {
+            String headPath = getHeadPath(isUser, filePath);
+            File file = new File(headPath + filePath);
+            if (!file.exists()) {
+                throw new Exception(
+                        "Could not found file: " + filePath);
+            }
+            Resource resource = new UrlResource(file.toURI());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new Exception(
+                        "Could not read file: " + filePath);
+            }
+        } catch (MalformedURLException e) {
+            throw new Exception("Could not read file: " + filePath, e);
+        }
+    }
+
 }

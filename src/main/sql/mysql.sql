@@ -2,8 +2,7 @@
 SQLyog Ultimate v10.00 Beta1
 MySQL - 5.1.37-community : Database - clickfarm
 *********************************************************************
-*/
-
+*/
 
 /*!40101 SET NAMES utf8 */;
 
@@ -71,17 +70,18 @@ CREATE TABLE `s_permission` (
 
 insert  into `s_permission`(`id`,`name`,`desc`,`url`,`type`,`pid`,`enable`) values (1,'user:view','管理用户',NULL,'menu',0,''),(2,NULL,NULL,NULL,NULL,NULL,'');
 
-/*Table structure for table `s_photo` */
+/*Table structure for table `s_pic` */
 
-CREATE TABLE `s_photo` (
-  `id` int(12) NOT NULL AUTO_INCREMENT COMMENT '主键',
+CREATE TABLE `s_pic` (
+  `guid` varchar(50) NOT NULL COMMENT '唯一Id',
   `userId` int(11) DEFAULT NULL COMMENT '用户ID',
-  `fileName` varchar(50) DEFAULT NULL COMMENT '文件名',
+  `fileName` varchar(100) DEFAULT NULL COMMENT '文件相对路径',
+  `originalName` varchar(100) DEFAULT NULL COMMENT '文件原始文件名',
   `ord` int(3) DEFAULT '1' COMMENT '序号',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`guid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `s_photo` */
+/*Data for the table `s_pic` */
 
 /*Table structure for table `s_role` */
 
@@ -113,7 +113,7 @@ insert  into `s_role_permission`(`rid`,`pid`) values (1,1);
 CREATE TABLE `s_shop` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `platform` int(5) DEFAULT '81' COMMENT '平台选择',
-  `pic` varchar(200) DEFAULT NULL COMMENT '示例图片',
+  `pic` varchar(50) DEFAULT NULL COMMENT '示例图片',
   `goodsUrl` varchar(500) DEFAULT NULL COMMENT '商品链接',
   `name` varchar(200) DEFAULT NULL COMMENT '店铺名称',
   `wangWandName` varchar(100) DEFAULT NULL COMMENT '旺旺ID',
@@ -136,7 +136,7 @@ CREATE TABLE `s_task` (
   `title` varchar(200) DEFAULT NULL COMMENT '商品标题',
   `price` double DEFAULT NULL COMMENT '单品价格',
   `showPrice` double DEFAULT NULL COMMENT '展示价格',
-  `pic` varchar(200) DEFAULT NULL COMMENT '商品主图',
+  `pic` varchar(50) DEFAULT NULL COMMENT '商品主图',
   `count` int(10) DEFAULT NULL COMMENT '拍下数量',
   `post` tinyint(1) DEFAULT '1' COMMENT '是否包邮',
   `searchPrice1` double DEFAULT NULL COMMENT '搜索价格1',
@@ -148,9 +148,9 @@ CREATE TABLE `s_task` (
   `searchKey` varchar(100) DEFAULT NULL COMMENT '搜索关键词',
   `orderCount` int(11) DEFAULT NULL COMMENT '单数',
   `comment` varchar(500) DEFAULT NULL COMMENT '评语示例或提示',
-  `praisePic1` varchar(200) DEFAULT NULL COMMENT '图片好评示例1',
-  `praisePic2` varchar(200) DEFAULT NULL COMMENT '图片好评示例2',
-  `praisePic3` varchar(200) DEFAULT NULL COMMENT '图片好评示例3',
+  `praisePic1` varchar(50) DEFAULT NULL COMMENT '图片好评示例1',
+  `praisePic2` varchar(50) DEFAULT NULL COMMENT '图片好评示例2',
+  `praisePic3` varchar(50) DEFAULT NULL COMMENT '图片好评示例3',
   `praisePrice` int(11) DEFAULT '100' COMMENT '好评价格',
   `sexType` int(5) DEFAULT '0' COMMENT '性别限制',
   `sexPrice` int(5) DEFAULT '100' COMMENT '性别价格',
@@ -169,15 +169,15 @@ CREATE TABLE `s_task` (
   `topPrice` int(10) DEFAULT NULL COMMENT '置顶价格',
   `payType` int(5) DEFAULT NULL COMMENT '付款类型',
   `taoCmd` varchar(500) DEFAULT NULL COMMENT '淘口令',
-  `qrCode` varchar(200) DEFAULT NULL COMMENT '二维码',
+  `qrCode` varchar(50) DEFAULT NULL COMMENT '二维码',
   `cartHour` int(3) DEFAULT NULL COMMENT '购物车收藏定时后付款',
   `searchType` int(5) DEFAULT '131' COMMENT '如何找到商品',
   `searchUrl` varchar(500) DEFAULT NULL COMMENT '淘客链接',
-  `searchPic1` varchar(200) DEFAULT NULL COMMENT '搜索商品步骤图片1',
-  `searchPic2` varchar(200) DEFAULT NULL COMMENT '搜索商品步骤图片2',
-  `searchPic3` varchar(200) DEFAULT NULL COMMENT '搜索商品步骤图片3',
-  `searchPic4` varchar(200) DEFAULT NULL COMMENT '搜索商品步骤图片4',
-  `searchPic5` varchar(200) DEFAULT NULL COMMENT '搜索商品步骤图片5',
+  `searchPic1` varchar(50) DEFAULT NULL COMMENT '搜索商品步骤图片1',
+  `searchPic2` varchar(50) DEFAULT NULL COMMENT '搜索商品步骤图片2',
+  `searchPic3` varchar(50) DEFAULT NULL COMMENT '搜索商品步骤图片3',
+  `searchPic4` varchar(50) DEFAULT NULL COMMENT '搜索商品步骤图片4',
+  `searchPic5` varchar(50) DEFAULT NULL COMMENT '搜索商品步骤图片5',
   `receiveCount` int(10) DEFAULT '0' COMMENT '已领取单数',
   `finishCount` int(10) DEFAULT '0' COMMENT '已完成单数',
   `auditCount` int(10) DEFAULT '0' COMMENT '已审核单数',
@@ -197,9 +197,9 @@ CREATE TABLE `s_trade` (
   `type` int(2) DEFAULT NULL COMMENT '操作类型',
   `status` int(5) DEFAULT NULL COMMENT '流水状态',
   `writeTime` datetime DEFAULT NULL COMMENT '插入时间',
-  `transferPic` varchar(200) DEFAULT NULL COMMENT '转帐图片',
+  `transferPic` varchar(50) DEFAULT NULL COMMENT '转帐图片',
   `operater` int(10) DEFAULT NULL COMMENT '操作员',
-  `optPic` varchar(200) DEFAULT NULL COMMENT '操作员确认截图',
+  `optPic` varchar(50) DEFAULT NULL COMMENT '操作员确认截图',
   `optTime` datetime DEFAULT NULL COMMENT '操作员确认时间',
   `balance` double DEFAULT NULL COMMENT '帐面余额',
   PRIMARY KEY (`id`)
@@ -223,22 +223,23 @@ CREATE TABLE `s_user` (
   `taobaoId` varchar(50) DEFAULT NULL COMMENT '淘宝',
   `qq` varchar(50) DEFAULT NULL COMMENT 'QQ',
   `writeTime` datetime DEFAULT NULL COMMENT '注册时间',
-  `pic` varchar(200) DEFAULT NULL COMMENT '正面文件名',
-  `photo2` varchar(200) DEFAULT NULL COMMENT '反面文件名',
-  `photo3` varchar(200) DEFAULT NULL COMMENT '手持身份证文件名',
+  `pic1` varchar(50) DEFAULT NULL COMMENT '正面文件名',
+  `pic2` varchar(50) DEFAULT NULL COMMENT '反面文件名',
+  `pic3` varchar(50) DEFAULT NULL COMMENT '手持身份证文件名',
   `password` varchar(50) DEFAULT NULL COMMENT '登录密码',
   `lastLoginTime` datetime DEFAULT NULL,
   `tradePassword` varchar(50) DEFAULT NULL COMMENT '提现密码',
   `oldPhone` varchar(50) DEFAULT NULL COMMENT '旧手机号',
   `level` int(5) DEFAULT '55' COMMENT '用户等级',
+  `editTime` datetime DEFAULT NULL COMMENT '编辑时间',
   PRIMARY KEY (`id`),
   KEY `area_id` (`areaId`),
   KEY `status_id` (`statusId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `s_user` */
 
-insert  into `s_user`(`id`,`number`,`name`,`phone`,`areaId`,`sms`,`statusId`,`idCard`,`bankCard`,`alipayId`,`taobaoId`,`qq`,`writeTime`,`pic`,`photo2`,`photo3`,`password`,`lastLoginTime`,`tradePassword`,`oldPhone`,`level`) values (1,'admin',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'038bdaf98f2037b31f1e75b5b4c9b26e',NULL,NULL,NULL,55),(2,'user',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'098d2c478e9c11555ce2823231e02ec1',NULL,NULL,NULL,55),(3,'13705069096','黄志霖','13705069096',0,NULL,2,NULL,NULL,NULL,NULL,NULL,'2018-04-30 23:19:37',NULL,NULL,NULL,'5c9670e301947249bc11c98a19e7619c',NULL,NULL,NULL,55);
+insert  into `s_user`(`id`,`number`,`name`,`phone`,`areaId`,`sms`,`statusId`,`idCard`,`bankCard`,`alipayId`,`taobaoId`,`qq`,`writeTime`,`pic1`,`pic2`,`pic3`,`password`,`lastLoginTime`,`tradePassword`,`oldPhone`,`level`,`editTime`) values (1,'admin',NULL,'12345678911',NULL,NULL,NULL,NULL,NULL,'5555',NULL,NULL,NULL,NULL,NULL,NULL,'038bdaf98f2037b31f1e75b5b4c9b26e',NULL,NULL,'12345678900',55,'2018-05-05 23:23:45'),(2,'user',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'098d2c478e9c11555ce2823231e02ec1',NULL,NULL,NULL,55,NULL),(3,'13705069096','黄志霖','13705069096',0,NULL,2,NULL,NULL,'5555',NULL,NULL,'2018-04-30 23:19:37',NULL,NULL,NULL,'5c9670e301947249bc11c98a19e7619c',NULL,NULL,'13705069999',55,'2018-05-05 23:18:43'),(4,NULL,NULL,'12345678922',0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL),(5,NULL,NULL,'12345678922',0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL);
 
 /*Table structure for table `s_user_log` */
 
@@ -251,9 +252,11 @@ CREATE TABLE `s_user_log` (
   `newValue` varchar(100) DEFAULT NULL COMMENT '新值',
   `writeTime` datetime DEFAULT NULL COMMENT '插入时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 /*Data for the table `s_user_log` */
+
+insert  into `s_user_log`(`id`,`uid`,`propName`,`propDesc`,`oldValue`,`newValue`,`writeTime`) values (11,0,'phone','手机号','13705069999','13705069096','2018-05-05 23:18:43'),(12,0,'alipayId','支付宝帐号',NULL,'5555','2018-05-05 23:18:43'),(13,0,'phone','手机号','12345678900','12345678911','2018-05-05 23:23:45'),(14,0,'alipayId','支付宝帐号',NULL,'5555','2018-05-05 23:23:45'),(15,0,'password','登录密码',NULL,'123',NULL);
 
 /*Table structure for table `s_user_role` */
 

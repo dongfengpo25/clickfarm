@@ -14,6 +14,8 @@ public class DebugProperties {
     private String uploadFilesPath;
     //上传图片相对路径
     private String uploadPicPath;
+    //用户信息的图片相对路径
+    private String uploadUserPicPath;
 
     public String getUploadFilesPath() {
         return uploadFilesPath;
@@ -29,5 +31,13 @@ public class DebugProperties {
 
     public void setUploadPicPath(String uploadPicPath) {
         this.uploadPicPath = uploadPicPath;
+    }
+
+    public String getUploadUserPicPath() {
+        return uploadUserPicPath;
+    }
+
+    public void setUploadUserPicPath(String uploadUserPicPath) {
+        this.uploadUserPicPath = uploadUserPicPath;
     }
 }

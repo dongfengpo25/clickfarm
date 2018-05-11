@@ -63,7 +63,7 @@ public class FileUtil {
         if (!StringUtil.isEmpty(originalFilename)) {
             if (originalFilename.contains(".")) {
                 try {
-                    return originalFilename.substring(originalFilename.indexOf("."));
+                    return originalFilename.substring(originalFilename.lastIndexOf("."));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

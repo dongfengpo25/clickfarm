@@ -2,27 +2,31 @@ package com.hzl.web.bean.response;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.security.PublicKey;
 
 public class FileResponseJson extends ResponseJson implements IFileResponse {
-    public final String _statusCode = "statusCode";
-    public final String _filename = "filename";
+
 
     public FileResponseJson() {
         super();
         put(_statusCode, 500);
-        JSONArray files = new JSONArray();
-        put(_files, files);
+        //JSONArray files = new JSONArray();
+        //put(_files, files);
     }
 
-    public void addFile(String originalFilename, String savePath) {
-        JSONArray files = (JSONArray) get(_files);
-        JSONObject file = new JSONObject();
-        file.put(_originalFilename, originalFilename);
-        file.put(_savePath, savePath);
-        files.add(file);
+//    public void addFile(String originalFilename, String savePath) {
+//        JSONArray files = (JSONArray) get(_files);
+//        JSONObject file = new JSONObject();
+//        file.put(_originalName, originalFilename);
+//        file.put(_filename, savePath);
+//        files.add(file);
+//    }
+
+    public void setOriginalName(String originalName) {
+        put(_originalName, originalName);
+    }
+
+    public void setFileName(String fileName) {
+        put(_filename, fileName);
     }
 
     @Override
@@ -35,7 +39,4 @@ public class FileResponseJson extends ResponseJson implements IFileResponse {
         put(_statusCode, statusCode);
     }
 
-    public void setFilename(String filename) {
-        put(_filename, filename);
-    }
 }
