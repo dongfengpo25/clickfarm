@@ -5,9 +5,9 @@
 </head>
 <body>
 <div class="bjui-pageContent">
-        <div class="bjui-row col-3">
-            <div class="row-input">
-                <input type="file" data-name="pic1" data-alertmsg="false" data-toggle="webuploader" data-options="
+    <div class="bjui-row col-3">
+        <div class="row-input">
+            <input type="file" data-name="pic1" data-alertmsg="false" data-toggle="webuploader" data-options="
                         {
                             pick: {label: '点击选择图片'},
                             server: 'file/upload',
@@ -22,47 +22,51 @@
                                 mimeTypes: '.jpg,.png'
                             }
                         }"
-                >
-            </div>
-            <div class="row-input">
-                <input type="file" data-name="custom.pic" data-alertmsg="false" data-toggle="webuploader" data-options="
-                        {
-                            pick: {label: '点击选择图片'},
-                            server: 'file/upload',
-                            fileNumLimit: 1,
-                            formData: {dir:'custompic'},
-                            required: true,
-                            uploaded: '',
-                            basePath: '',
-                            accept: {
-                                title: '图片',
-                                extensions: 'jpg,png',
-                                mimeTypes: '.jpg,.png'
-                            }
-                        }"
-                >
-            </div>
-            <div class="row-input">
-                <input type="file" data-name="custom.pic" data-alertmsg="false" data-toggle="webuploader" data-options="
-                        {
-                            pick: {label: '点击选择图片'},
-                            server: 'file/upload',
-                            fileNumLimit: 1,
-                            formData: {dir:'custompic'},
-                            required: true,
-                            uploaded: '',
-                            basePath: '',
-                            accept: {
-                                title: '图片',
-                                extensions: 'jpg,png',
-                                mimeTypes: '.jpg,.png'
-                            }
-                        }"
-                >
-            </div>
+            >
         </div>
+        <div class="row-input">
+            <input type="file" data-name="custom.pic" data-alertmsg="false" data-toggle="webuploader" data-options="
+                        {
+                            pick: {label: '点击选择图片'},
+                            server: 'file/upload',
+                            fileNumLimit: 1,
+                            formData: {dir:'custompic'},
+                            required: true,
+                            uploaded: '',
+                            basePath: '',
+                            accept: {
+                                title: '图片',
+                                extensions: 'jpg,png',
+                                mimeTypes: '.jpg,.png'
+                            }
+                        }"
+            >
+        </div>
+        <div class="row-input">
+            <input type="file" data-name="custom.pic" data-alertmsg="false" data-toggle="webuploader" data-options="
+                        {
+                            pick: {label: '点击选择图片'},
+                            server: 'file/upload',
+                            fileNumLimit: 1,
+                            formData: {dir:'custompic'},
+                            required: true,
+                            uploaded: '',
+                            basePath: '',
+                            accept: {
+                                title: '图片',
+                                extensions: 'jpg,png',
+                                mimeTypes: '.jpg,.png'
+                            }
+                        }"
+            >
+        </div>
+    </div>
     <div>
-        <img th:src="@{/file/view/20180509/9bjlWWh7ARxkb99xVZvD.jpg}">
+        <p>
+            显示已上传的图片：
+            <br>
+            <img th:src="@{/file/view/20180509/9bjlWWh7ARxkb99xVZvD.jpg}">
+        </p>
     </div>
 </div>
 </body>

@@ -255,7 +255,7 @@ public class FileController {
 
     private ResponseEntity<?> viewPic(String datePath, String filePath, boolean isUser) {
         try {
-            return ResponseEntity.ok(loadResource(datePath + File.separator + filePath, true));
+            return ResponseEntity.ok(loadResource(datePath + File.separator + filePath,  isUser));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
