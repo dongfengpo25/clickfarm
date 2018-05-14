@@ -27,8 +27,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfo getUserByNumber(String number) {
-        return userInfoDao.getUserInfoByNumber(number);
+    public UserInfo getUserInfoByLogin(String param) {
+        return userInfoDao.getUserInfoByLogin(param);
     }
 
     @Override
@@ -52,5 +52,9 @@ public class UserServiceImpl implements UserService {
         user.setPhone(phone);
         user.setPassword(password);
         return userInfoDao.editUser(user);
+    }
+
+    public boolean addRole(UserInfo userInfo){
+        return userInfoDao.addRole(userInfo);
     }
 }

@@ -18,8 +18,8 @@ public class UserServiceTest {
     UserServiceImpl userService;
 
     @Test
-    public void testUserByNumber() {
-       UserInfo user =  userService.getUserByNumber("12345678900");
+    public void testUserByLogin() {
+       UserInfo user =  userService.getUserInfoByLogin("12345678922");
        System.out.println(user);
     }
 

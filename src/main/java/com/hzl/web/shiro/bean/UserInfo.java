@@ -9,7 +9,7 @@ public class UserInfo {
     //ID主键
     private int id;
     //用户号码
-    private String number;
+    private int number;
     //用户姓名
     private String name;
     //手机号
@@ -63,11 +63,11 @@ public class UserInfo {
         this.id = id;
     }
 
-    public String getNumber() {
+    public int getNumber() {
         return number;
 }
 
-    public void setNumber(String number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 

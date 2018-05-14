@@ -21,8 +21,8 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao {
     }
 
     @Override
-    public UserInfo getUserInfoByNumber(String number) {
-        return sqlSession.selectOne("userInfo.getUserInfoByNumber", number);
+    public UserInfo getUserInfoByLogin(String param) {
+        return sqlSession.selectOne("userInfo.getUserInfoByLogin", param);
     }
 
     @Override
@@ -40,4 +40,8 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao {
         return sqlSession.update("userInfo.disableUser", phone) >0;
     }
 
+    @Override
+    public boolean addRole(UserInfo userInfo) {
+        return sqlSession.update("userInfo.addRole", userInfo) > 0;
+    }
 }

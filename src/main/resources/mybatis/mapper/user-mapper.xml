@@ -28,8 +28,8 @@
         select * from s_user where phone = #{phone}
     </select>
 
-    <select id="getUserInfoByNumber" parameterType="string" resultType="UserInfo">
-        select * from s_user where number = #{number}
+    <select id="getUserInfoByLogin" parameterType="string" resultType="UserInfo">
+        select * from s_user where number = #{param} or phone = #{param}
     </select>
 
     <insert id="addUser" parameterType="UserInfo">
@@ -213,5 +213,10 @@
     <update id="disableUser" parameterType="string">
         update  s_user set  statusId=4 where phone=#{phone}
     </update>
+
+    <insert id="addRole" parameterType="UserInfo">
+        INSERT INTO s_user_role (uid,rid)
+        select id,#{roleId} from s_user where phone = #{phone}
+    </insert>
 
 </mapper>

@@ -12,11 +12,13 @@ public interface UserInfoDao {
 
     public UserInfo getUserInfoByPhone(String phone);
 
-    public UserInfo getUserInfoByNumber(String number);
+    public UserInfo getUserInfoByLogin(String param);
 
     public boolean addUser(UserInfo userInfo);
 
     public boolean editUser(UserInfo userInfo);
 
     public boolean disableUser(String phone);
+
+    public boolean addRole(UserInfo userInfo);
 }

@@ -10,7 +10,7 @@ public interface UserService {
 
     public UserInfo getUserByPhone(String phone);
 
-    public UserInfo getUserByNumber(String number);
+    public UserInfo getUserInfoByLogin(String param);
 
     public boolean addUser(UserInfo userInfo);
 
@@ -19,4 +19,6 @@ public interface UserService {
     public boolean disableUser(String phone);
 
     public boolean editPassword(String phone, String password);
+
+    public boolean addRole(UserInfo userInfo);
 }

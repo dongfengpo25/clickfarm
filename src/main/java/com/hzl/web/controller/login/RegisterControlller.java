@@ -7,6 +7,7 @@ import com.hzl.web.shiro.service.impl.UserServiceImpl;
 import com.hzl.web.util.AuthUtil;
 import com.hzl.web.util.DateUtil;
 import com.hzl.web.util.StringUtil;
+import com.hzl.web.util.UserUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class RegisterControlller extends BaseController {
                            @RequestParam("captcha") String captcha,
                            Map<String, Object> map,
                            RedirectAttributes redirectAttributes) throws Exception {
-        ResponseJson json = doRegister(name, phone, password, captcha);
+        ResponseJson json = doRegister(name, phone, password, captcha, 3);
         if (json.get(_succ).equals(true)) {
             return "redirect:/login.html";
         } else {
@@ -88,10 +89,10 @@ public class RegisterControlller extends BaseController {
                            @RequestParam("phone") String phone,
                            @RequestParam("password") String password,
                            @RequestParam(value = "captcha", required = false, defaultValue = "") String captcha) throws Exception {
-        return doRegister(null, phone, password, null);
+        return doRegister(null, phone, password, null, 4);
     }
 
-    private ResponseJson doRegister(String name, String phone, String password, String captcha) throws Exception {
+    private ResponseJson doRegister(String name, String phone, String password, String captcha, int roleId) throws Exception {
         ResponseJson json = new ResponseJson();
         json.put(_succ, false);
         try {
@@ -136,13 +137,14 @@ public class RegisterControlller extends BaseController {
                 String saltPwd = AuthUtil.getHashPassword(phone, password);
 
                 UserInfo user = new UserInfo();
-                user.setNumber(phone);
+                user.setNumber(UserUtil.generateNumber());
                 user.setPhone(phone);
                 user.setName(name);
                 user.setPassword(saltPwd);
                 user.setStatusId(2);
                 user.setWriteTime(DateUtil.getCurrDateTime());
                 userService.addUser(user);
+                userService.addRole(user);
             } catch (Exception e) {
                 json.put(_msg, "注册失败！");
                 return json;

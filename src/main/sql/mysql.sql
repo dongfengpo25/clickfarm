@@ -211,9 +211,9 @@ CREATE TABLE `s_trade` (
 
 CREATE TABLE `s_user` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `number` varchar(20) DEFAULT NULL COMMENT '编号',
+  `number` int(11) NOT NULL COMMENT '编号',
   `name` varchar(50) DEFAULT NULL COMMENT '姓名',
-  `phone` varchar(50) DEFAULT NULL COMMENT '手机号',
+  `phone` varchar(50) NOT NULL COMMENT '手机号',
   `areaId` int(12) DEFAULT NULL COMMENT '地区ID',
   `sms` varchar(12) DEFAULT NULL COMMENT '短信验证码',
   `statusId` int(2) DEFAULT NULL COMMENT '状态ID',
@@ -235,11 +235,11 @@ CREATE TABLE `s_user` (
   PRIMARY KEY (`id`),
   KEY `area_id` (`areaId`),
   KEY `status_id` (`statusId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `s_user` */
 
-insert  into `s_user`(`id`,`number`,`name`,`phone`,`areaId`,`sms`,`statusId`,`idCard`,`bankCard`,`alipayId`,`taobaoId`,`qq`,`writeTime`,`pic1`,`pic2`,`pic3`,`password`,`lastLoginTime`,`tradePassword`,`oldPhone`,`level`,`editTime`) values (1,'admin',NULL,'12345678911',NULL,NULL,NULL,NULL,NULL,'5555',NULL,NULL,NULL,NULL,NULL,NULL,'038bdaf98f2037b31f1e75b5b4c9b26e',NULL,NULL,'12345678900',55,'2018-05-05 23:23:45'),(2,'user',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'098d2c478e9c11555ce2823231e02ec1',NULL,NULL,NULL,55,NULL),(3,'13705069096','黄志霖','13705069096',0,NULL,2,NULL,NULL,'5555',NULL,NULL,'2018-04-30 23:19:37',NULL,NULL,NULL,'5c9670e301947249bc11c98a19e7619c',NULL,NULL,'13705069999',55,'2018-05-05 23:18:43'),(4,NULL,NULL,'12345678922',0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL),(5,NULL,NULL,'12345678922',0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL);
+insert  into `s_user`(`id`,`number`,`name`,`phone`,`areaId`,`sms`,`statusId`,`idCard`,`bankCard`,`alipayId`,`taobaoId`,`qq`,`writeTime`,`pic1`,`pic2`,`pic3`,`password`,`lastLoginTime`,`tradePassword`,`oldPhone`,`level`,`editTime`) values (1,0,NULL,'12345678911',NULL,NULL,NULL,NULL,NULL,'5555',NULL,NULL,NULL,NULL,NULL,NULL,'038bdaf98f2037b31f1e75b5b4c9b26e',NULL,NULL,'12345678900',55,'2018-05-05 23:23:45'),(2,0,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'098d2c478e9c11555ce2823231e02ec1',NULL,NULL,NULL,55,NULL),(3,2147483647,'黄志霖','13705069096',0,NULL,2,NULL,NULL,'5555',NULL,NULL,'2018-04-30 23:19:37',NULL,NULL,NULL,'5c9670e301947249bc11c98a19e7619c',NULL,NULL,'13705069999',55,'2018-05-05 23:18:43');
 
 /*Table structure for table `s_user_log` */
 
@@ -252,22 +252,24 @@ CREATE TABLE `s_user_log` (
   `newValue` varchar(100) DEFAULT NULL COMMENT '新值',
   `writeTime` datetime DEFAULT NULL COMMENT '插入时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 /*Data for the table `s_user_log` */
 
-insert  into `s_user_log`(`id`,`uid`,`propName`,`propDesc`,`oldValue`,`newValue`,`writeTime`) values (11,0,'phone','手机号','13705069999','13705069096','2018-05-05 23:18:43'),(12,0,'alipayId','支付宝帐号',NULL,'5555','2018-05-05 23:18:43'),(13,0,'phone','手机号','12345678900','12345678911','2018-05-05 23:23:45'),(14,0,'alipayId','支付宝帐号',NULL,'5555','2018-05-05 23:23:45'),(15,0,'password','登录密码',NULL,'123',NULL);
+insert  into `s_user_log`(`id`,`uid`,`propName`,`propDesc`,`oldValue`,`newValue`,`writeTime`) values (11,0,'phone','手机号','13705069999','13705069096','2018-05-05 23:18:43'),(12,0,'alipayId','支付宝帐号',NULL,'5555','2018-05-05 23:18:43'),(13,0,'phone','手机号','12345678900','12345678911','2018-05-05 23:23:45'),(14,0,'alipayId','支付宝帐号',NULL,'5555','2018-05-05 23:23:45'),(15,0,'password','登录密码',NULL,'123',NULL),(16,0,'phone','手机号','12345678900','12345678911','2018-05-12 00:10:52'),(17,0,'alipayId','支付宝帐号',NULL,'5555','2018-05-12 00:10:52');
 
 /*Table structure for table `s_user_role` */
 
 CREATE TABLE `s_user_role` (
-  `uid` int(10) DEFAULT NULL COMMENT '用户ID',
-  `rid` int(5) DEFAULT NULL COMMENT '角色ID'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(10) NOT NULL COMMENT '用户ID',
+  `rid` int(5) NOT NULL COMMENT '角色ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `s_user_role` */
 
-insert  into `s_user_role`(`uid`,`rid`) values (1,1),(2,4);
+insert  into `s_user_role`(`id`,`uid`,`rid`) values (1,1,1),(2,2,4);
 
 /*Table structure for table `s_user_task` */
 

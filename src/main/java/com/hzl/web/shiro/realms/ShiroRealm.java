@@ -34,7 +34,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
 
         //3. 调用数据库的方法, 从数据库中查询 username 对应的用户记录
-        UserInfo userInfo = userService.getUserByNumber(username);
+        UserInfo userInfo = userService.getUserInfoByLogin(username);
         System.out.println("从数据库中获取 username: " + username + " 所对应的用户信息.");
 
         //4. 若用户不存在, 则可以抛出 UnknownAccountException 异常
