@@ -1,9 +1,11 @@
 package com.hzl.web.controller.menu;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -45,11 +47,13 @@ public class MenuController {
     }
 
     @RequestMapping(value = "/membermgr")
+    @RequiresRoles({"admin", "member"})
     public String membermgr(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "web/mgr/membermgr.html";
     }
 
     @RequestMapping(value = "/shopmgr")
+    @RequiresRoles({"admin"})
     public String shopmgr(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "web/mgr/shopmgr.html";
     }
