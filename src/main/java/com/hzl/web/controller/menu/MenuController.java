@@ -43,4 +43,14 @@ public class MenuController {
     public String uploadFile(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "test/uploadFile.html";
     }
+
+    @RequestMapping(value = "/membermgr")
+    public String membermgr(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "web/mgr/membermgr.html";
+    }
+
+    @RequestMapping(value = "/shopmgr")
+    public String shopmgr(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "web/mgr/shopmgr.html";
+    }
 }

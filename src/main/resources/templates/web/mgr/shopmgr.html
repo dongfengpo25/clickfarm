@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<script type="text/javascript">
+    $(function () {
+        debugger;
+        $("#btn_ok").click(function () {
+            $.fn.alertConfirm('abc', {
+                okCall: function () {
+                    BJUI.alertmsg('info', '你点击了确定按钮！')
+                }
+            });
+        })
+    })
+</script>
+<body>
+<div class="bjui-row" align="center">
+    <button id="btn_ok" type="button" class="btn-blue btn-lg" style="width:200px;">提交1</button>
+</div>
+
+</body>
+</html>

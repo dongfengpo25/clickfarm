@@ -28,7 +28,7 @@
         select * from s_user where phone = #{phone}
     </select>
 
-    <select id="getUserInfoByLogin" parameterType="string" resultType="UserInfo">
+    <select id="getUserInfoByLogin" parameterType="string" resultMap="userInfoResult">
         select * from s_user where number = #{param} or phone = #{param}
     </select>
 

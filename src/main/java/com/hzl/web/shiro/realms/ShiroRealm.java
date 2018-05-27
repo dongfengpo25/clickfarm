@@ -78,7 +78,7 @@ public class ShiroRealm extends AuthorizingRealm {
     public static void main(String[] args) {
         String hashAlgorithmName = "MD5";
         Object credentials = "123456";
-        Object salt = ByteSource.Util.bytes("user");
+        Object salt = ByteSource.Util.bytes("12345678900");
 
         int hashIterations = 1024;
 
@@ -103,10 +103,14 @@ public class ShiroRealm extends AuthorizingRealm {
         //3. 创建 SimpleAuthorizationInfo, 并设置其 reles 属性.
         //SimpleAuthorizationInfo info = new SimpleAuthorizationInfo(roles);
         SimpleAuthorizationInfo autoInfo = new SimpleAuthorizationInfo();
-        for (Role role : userInfo.getRoles()) {
-            autoInfo.addRole(role.getName());
-            for (Permission p : role.getPermissions()) {
-                autoInfo.addStringPermission(p.getName());
+        if (userInfo.getRoles() != null) {
+            for (Role role : userInfo.getRoles()) {
+                autoInfo.addRole(role.getName());
+                if (role.getPermissions() != null) {
+                    for (Permission p : role.getPermissions()) {
+                        autoInfo.addStringPermission(p.getName());
+                    }
+                }
             }
         }
 
