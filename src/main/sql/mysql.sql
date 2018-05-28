@@ -235,11 +235,11 @@ CREATE TABLE `s_user` (
   PRIMARY KEY (`id`),
   KEY `area_id` (`areaId`),
   KEY `status_id` (`statusId`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `s_user` */
 
-insert  into `s_user`(`id`,`number`,`name`,`phone`,`areaId`,`sms`,`statusId`,`idCard`,`bankCard`,`alipayId`,`taobaoId`,`qq`,`writeTime`,`pic1`,`pic2`,`pic3`,`password`,`lastLoginTime`,`tradePassword`,`oldPhone`,`level`,`editTime`) values (1,0,NULL,'12345678911',NULL,NULL,NULL,NULL,NULL,'5555',NULL,NULL,NULL,NULL,NULL,NULL,'038bdaf98f2037b31f1e75b5b4c9b26e',NULL,NULL,'12345678900',55,'2018-05-05 23:23:45'),(2,0,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'098d2c478e9c11555ce2823231e02ec1',NULL,NULL,NULL,55,NULL),(3,2147483647,'黄志霖','13705069096',0,NULL,2,NULL,NULL,'5555',NULL,NULL,'2018-04-30 23:19:37',NULL,NULL,NULL,'5c9670e301947249bc11c98a19e7619c',NULL,NULL,'13705069999',55,'2018-05-05 23:18:43');
+insert  into `s_user`(`id`,`number`,`name`,`phone`,`areaId`,`sms`,`statusId`,`idCard`,`bankCard`,`alipayId`,`taobaoId`,`qq`,`writeTime`,`pic1`,`pic2`,`pic3`,`password`,`lastLoginTime`,`tradePassword`,`oldPhone`,`level`,`editTime`) values (1,0,NULL,'12345678911',NULL,NULL,NULL,NULL,NULL,'5555',NULL,NULL,NULL,NULL,NULL,NULL,'038bdaf98f2037b31f1e75b5b4c9b26e',NULL,NULL,'12345678900',55,'2018-05-05 23:23:45'),(2,0,NULL,'12345678900',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'034a203ae9d1aad108af62ed975ed4e2',NULL,NULL,NULL,55,NULL),(3,2147483647,'黄志霖','13705069096',0,NULL,2,NULL,NULL,'5555',NULL,NULL,'2018-04-30 23:19:37',NULL,NULL,NULL,'5c9670e301947249bc11c98a19e7619c',NULL,NULL,'13705069999',55,'2018-05-05 23:18:43');
 
 /*Table structure for table `s_user_log` */
 
@@ -265,11 +265,11 @@ CREATE TABLE `s_user_role` (
   `uid` int(10) NOT NULL COMMENT '用户ID',
   `rid` int(5) NOT NULL COMMENT '角色ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `s_user_role` */
 
-insert  into `s_user_role`(`id`,`uid`,`rid`) values (1,1,1),(2,2,4);
+insert  into `s_user_role`(`id`,`uid`,`rid`) values (1,1,1),(2,2,3),(3,3,1);
 
 /*Table structure for table `s_user_task` */
 

@@ -3,9 +3,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="userInfo">
 
+    <select id="getUserInfoByLogin" parameterType="string" resultMap="userInfoResult">
+        select * from s_user where number = #{param} or phone = #{param}
+    </select>
+
     <resultMap id="userInfoResult" type="UserInfo">
         <collection property="roles" javaType="ArrayList" column="id" ofType="Role" select="selectRoleForUser"/>
     </resultMap>
+
+    <select id="selectRoleForUser" resultMap="roleResult">
+        SELECT a.* FROM s_role a LEFT JOIN s_user_role b ON a.id =b.`rid` WHERE b.`uid` = #{id} and a.enable = 1
+    </select>
 
     <resultMap id="roleResult" type="Role">
         <collection property="permissions" javaType="ArrayList" column="id" ofType="Permission"
@@ -16,10 +24,6 @@
         SELECT a.* FROM s_permission a LEFT JOIN s_role_permission b ON a.id =b.pid WHERE b.rid = #{id} and a.enable = 1
     </select>
 
-    <select id="selectRoleForUser" resultMap="roleResult">
-        SELECT a.* FROM s_role a LEFT JOIN s_user_role b ON a.id =b.`rid` WHERE b.`uid` = #{id} and a.enable = 1
-    </select>
-
     <select id="query" resultMap="userInfoResult">
         select * from s_user
     </select>
@@ -28,9 +32,7 @@
         select * from s_user where phone = #{phone}
     </select>
 
-    <select id="getUserInfoByLogin" parameterType="string" resultMap="userInfoResult">
-        select * from s_user where number = #{param} or phone = #{param}
-    </select>
+
 
     <insert id="addUser" parameterType="UserInfo">
         INSERT INTO s_user

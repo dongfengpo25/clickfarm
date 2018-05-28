@@ -1,5 +1,6 @@
 package com.hzl.web.controller.menu;
 
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,7 +48,7 @@ public class MenuController {
     }
 
     @RequestMapping(value = "/membermgr")
-    @RequiresRoles({"admin", "member"})
+    @RequiresRoles(value = {"admin", "shop"}, logical = Logical.OR)
     public String membermgr(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "web/mgr/membermgr.html";
     }
